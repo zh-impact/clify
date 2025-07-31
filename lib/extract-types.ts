@@ -1,5 +1,7 @@
 import { Project, ts } from "ts-morph";
 
+import type { CmdArg } from "../cmd";
+
 const project = new Project({
   tsConfigFilePath: undefined,
   compilerOptions: {
@@ -11,27 +13,18 @@ const project = new Project({
   },
 });
 
-type InterfaceResult = Map<
-  string,
-  {
-    input?: { name?: string; type?: string }[];
-    output?: string;
-  }
->;
-
 export function extractTypes(filepath: string) {
   const sourceFile = project.addSourceFileAtPath(filepath);
   const interfaceDeclarations = sourceFile.getExportedDeclarations();
 
-  const results: InterfaceResult = new Map();
+  const results = new Map<string, CmdArg>();
 
   interfaceDeclarations.forEach((decls, name) => {
     for (const decl of decls) {
       const kind = decl.getKind();
 
       const isFuncDecl =
-        kind === ts.SyntaxKind.FunctionDeclaration ||
-        kind === ts.SyntaxKind.VariableDeclaration;
+        kind === ts.SyntaxKind.FunctionDeclaration || kind === ts.SyntaxKind.VariableDeclaration;
 
       if (!isFuncDecl) continue;
 

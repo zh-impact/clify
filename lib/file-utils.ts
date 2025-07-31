@@ -1,7 +1,7 @@
 import fs from "node:fs";
 
 export function isFile(filepath: string) {
-  return fs.statSync(filepath).isFile();
+  return fs.existsSync(filepath) && fs.statSync(filepath).isFile();
 }
 
 export function readFile(filepath: string) {
