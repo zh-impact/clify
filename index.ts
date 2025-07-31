@@ -3,6 +3,7 @@ import path from "node:path";
 import { Command } from "commander";
 
 import { extractTypes } from "./lib/extract-types";
+import { isFile, readFile } from "./lib/file-utils";
 
 if (process.argv.length < 3) {
   console.error("Usage: clify <filepath>");
@@ -11,8 +12,6 @@ if (process.argv.length < 3) {
 
 const filepath = process.argv[2]!;
 const args = process.argv.slice(3);
-
-// console.log(process.argv, filepath, args);
 
 if (import.meta.main) {
   const filenameWithoutExt = path.basename(filepath, path.extname(filepath));
@@ -30,6 +29,12 @@ if (import.meta.main) {
     });
     cmd.action((options) => {
       console.log("Command executed", key, options);
+      const isFileExists = isFile(options.text);
+      const content = readFile(options.text);
+      const arg = isFileExists ? content : options.text;
+      import(filepath).then((mod) => {
+        console.log(mod[key](arg));
+      });
     });
   });
 
