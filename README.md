@@ -1,15 +1,22 @@
 # clify
 
-To install dependencies:
+Turn your js/ts file into a CLI tool.
 
-```bash
-bun install
+Imagine you have a file `paragraphize.ts`:
+
+```ts
+export function paragraphize(text: string) {
+  return text.split(/(?:\r?\n){2,}/);
+}
+
+export default function defaultExport(text: string) {
+  console.log("defaultExport", text);
+}
 ```
 
-To run:
+You can run it like this:
 
 ```bash
-bun run index.ts
+clify paragraphize.ts main -t "Hello World" // Output: defaultExport Hello World
+clify paragraphize.ts para -t "Hello World" // Output: [ 'Hello World' ]
 ```
-
-This project was created using `bun init` in bun v1.2.18. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
