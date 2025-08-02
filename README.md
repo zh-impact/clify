@@ -20,3 +20,27 @@ You can run it like this:
 clify paragraphize.ts main -t "Hello World" // Output: defaultExport Hello World
 clify paragraphize.ts para -t "Hello World" // Output: [ 'Hello World' ]
 ```
+
+## Usage
+
+Install from npm:
+
+TODO:
+
+Install from source:
+
+Requirements:
+- bun
+or
+- node (This project is written in ts, but not using any Bun features, you can try to use node to run it)
+
+```bash
+git clone https://github.com/zh-impact/clify.git
+cd clify
+bun install
+bun link
+```
+
+Then you can use it like this:
+
+![Clify Usage](./assets/usage.png)

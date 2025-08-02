@@ -1,3 +1,5 @@
+#!/usr/bin/env bun
+
 import { makeMainProgram, makeSubCommand } from "./cmd";
 import { extractTypes } from "./lib/extract-types";
 
